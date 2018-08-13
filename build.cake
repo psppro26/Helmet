@@ -160,16 +160,18 @@ Task("Experimental-DotNetCore")
 		DotNetCorePublish(serverProjectPath, "netcoreapp2.1", "win-x86");
 		DotNetCorePublish(serverProjectPath, "netcoreapp2.1", "linux-x64");
 		DotNetCorePublish(serverProjectPath, "netcoreapp2.1", "osx-x64");
+		DotNetCorePublish(serverProjectPath, "netcoreapp2.1", "linux-arm");
 
 		Zip("./BuildOutput/Experimental/netcoreapp2.1/win-x86", $"./{artifactsDirName}/Experimental.netcoreapp.win-x86.zip");
 		Zip("./BuildOutput/Experimental/netcoreapp2.1/osx-x64", $"./{artifactsDirName}/Experimental.netcoreapp.osx-x64.zip");
 		Gzip("./BuildOutput/Experimental/netcoreapp2.1/linux-x64", $"./{artifactsDirName}", "Jackett", "Experimental.netcoreapp.linux-x64.tar.gz");
+		Gzip("./BuildOutput/Experimental/netcoreapp2.1/linux-arm", $"./{artifactsDirName}", "Jackett", "Experimental.netcoreapp.linux-arm.tar.gz");
 	});
 
 Task("Experimental")
 	.IsDependentOn("Experimental-Kestrel-Windows-Full-Framework")
 	.IsDependentOn("Experimental-Kestrel-Mono-Full-Framework")
-	//.IsDependentOn("Experimental-DotNetCore")
+	.IsDependentOn("Experimental-DotNetCore")
 	.Does(() =>
 	{
 		Information("Experimental builds completed");
